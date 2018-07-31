@@ -17,9 +17,9 @@ favicon: png
 # download.cdn.img is optional
 download:
   popup: true
-  url: https://github.com/UTCNFans/QuarkChat/blob/master/QuarkChat.jar
+  url: https://github.com/UTCNFans/QuarkChat/raw/master/QuarkChat.jar
   bower: QuarkChat
-  npm: QuarkChat-bootstrap-doc
+  npm: QuarkChat
   cdn:
     url: null
     img: null

@@ -9,167 +9,52 @@ isHome: true
   <h1 id="overview" class="page-header">Overview</h1>
 
   <blockquote>
-    This is a Jekyll template I use for my GitHub projects documentations. It is heavily based on official Bootstrap
-    documentation and is designed to be quickly deployed.
+    This is a free time project. This program is intended for people living in countries where their rights are violated, for whistleblowers and 
+	for journalists. 
   </blockquote>
 
   <h3 id="features">Features</h3>
 
   <ul>
-    <li>Responsive Bootstrap theme</li>
-    <li>Automatic syntax highlight</li>
-    <li>Multi-page</li>
-    <li>Automatic menu</li>
-    <li>Automatic heading anchors</li>
-    <li>Configurable additional links</li>
-    <li>Github counters</li>
-    <li>Twitter &amp; Facebook buttons</li>
-    <li>Download options popup</li>
-    <li>Changelog page generated from GitHub releases</li>
+    <li>simple but strong peer-to-peer connexion, no servers involved</li>
+    <li>highly secure symmetric encryptions methods</li>
+    <li>simple and easy to use GUI</li>
+    <li>further development (this is only the beginning)</li>
+    <li>Configurable receive and send ports and ip</li>
   </ul>
-
-  <h3 id="examples">Examples</h3>
-
-  <ul>
-    <li><a href="http://photo-sphere-viewer.js.org">Photo Sphere Viewer</a></li>
-    <li><a href="http://querybuilder.js.org">jQuery QueryBuilder</a></li>
-    <li><a href="http://bootstrap-confirmation.js.org">Bootstrap Confirmation</a></li>
-    <li><a href="http://mistic100.github.io/angular-smilies">AngularJS Smilies</a></li>
-  </ul>
+  
+  <h3 id="title">Current Encryption</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th style="width: 130px;">Name</th>
+          <th>description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AES</td>
+          <td>encryption of electronic data established by the U.S. National Institute of Standards and Technology (NIST) in 2001</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 
 <section class="bs-docs-section">
   <h1 id="installation" class="page-header">Installation</h1>
 
-  <h2 id="install-jekyll">Install Jekyll</h2>
+  <h2 id="install-jekyll">Install QuarkChat</h2>
   <p>
-    Follow the <a href="https://help.github.com/articles/using-jekyll-with-pages">GitHub guide</a> to install Jekyll
-    on your computer. The big steps are:
+    QuarkChat is a portable program, so no install is needed.
   </p>
 
-<!-- @formatter:off -->
-{% highlight bash %}
-$ apt-get install ruby ruby-dev
-$ gem install bundler
-$ git clone git://github.com/mistic100/jekyll-bootstrap-doc
-$ bundle install
-$ bundle exec jekyll serve
-{% endhighlight %}
-<!-- @formatter:on -->
-
   <h2 id="configuration">Configuration</h2>
-  <p>Adapt the <code>_config.yml</code> file to your project.</p>
-
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th style="width: 130px;">Name</th>
-          <th>description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>name</td>
-          <td>Name of the project.</td>
-        </tr>
-        <tr>
-          <td>version</td>
-          <td>Current version of the project</td>
-        </tr>
-        <tr>
-          <td>license</td>
-          <td>License of the project</td>
-        </tr>
-        <tr>
-          <td>licenseUrl</td>
-          <td>URL of the license text</td>
-        </tr>
-        <tr>
-          <td>favicon</td>
-          <td>Extension of the favicon</td>
-        </tr>
-        <tr>
-          <td>download</td>
-          <td>Configuration of the download button (see comment in the file)</td>
-        </tr>
-        <tr>
-          <td>headerLinks</td>
-          <td>
-            List of links to display on the right of the top menu. Each item must contain
-            <code>title</code> and <code>url</code> keys
-          </td>
-        </tr>
-        <tr>
-          <td>footerLinks</td>
-          <td>
-            List of links to display on the bottom of the page. Each item must contain
-            <code>title</code> and <code>url</code> keys
-          </td>
-        </tr>
-        <tr>
-          <td>header</td>
-          <td>
-            Configuration of the header, two colors gradient and boolean to activate or deactivate
-            <a href="http://qrohlf.com/trianglify/">Trianglify</a> generator
-          </td>
-        </tr>
-        <tr>
-          <td>analytics</td>
-          <td>
-            Google analytics identifiers. Provide <code>account</code> and <code>domain</code> or leave empty to
-            deactivate
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h3 id="social-buttons" data-no-menu>Social buttons</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th style="width: 130px;">Name</th>
-          <th>description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>githubButton</td>
-          <td>
-            Data used to generate <a href="http://ghbtns.com/">GitHub Buttons</a>.
-            Provide <code>user</code> and <code>repo</code>
-          </td>
-        </tr>
-        <tr>
-          <td>twitter.enabled</td>
-          <td>Enable or disable Twitter "Tweet" button</td>
-        </tr>
-        <tr>
-          <td>twitter.via</td>
-          <td>Account linked to "Tweet" button</td>
-        </tr>
-        <tr>
-          <td>twitter.hash</td>
-          <td>Default hashtags for the "Tweet" button</td>
-        </tr>
-        <tr>
-          <td>twitter.account</td>
-          <td>Account for Twitter "Follow" button. Leave empty to deactivate</td>
-        </tr>
-        <tr>
-          <td>facebook.enabled</td>
-          <td>Enable or disable Facebook "Like" &amp; "Share" buttons</td>
-        </tr>
-        <tr>
-          <td>facebook.profileUrl</td>
-          <td>Profile for Facebook "Follow" button. Leave empty to deactivate</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <p>
+	For this version <b>0.1 (beta)</b>, you are able to change the connexion settings and encryption settings
+  </p>
 </section>
 
 
