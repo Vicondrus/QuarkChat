@@ -12,7 +12,7 @@
 
 To guarantee you a highly anonymous connexion, program uses peer-to-peer connexion protocol. (no server involved, so your data will no be monitored).\
 Because it is a **beta** version, we stronly recommand you, if you are using a router connexion, to do port forwarding. In the next version we will implement uPnP.\
-This application is using TCP ports. \
+This application is using TCP ports.
 
 ---
 
