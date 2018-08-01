@@ -18,8 +18,6 @@ favicon: png
 download:
   popup: true
   url: https://github.com/UTCNFans/QuarkChat/raw/master/QuarkChat.jar
-  bower: QuarkChat
-  npm: QuarkChat
   cdn:
     url: null
     img: null
