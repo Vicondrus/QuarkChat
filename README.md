@@ -1,4 +1,3 @@
-Jekyll Bootstrap Doc
+QuarkChat
 ====================
-
-http://mistic100.github.io/jekyll-bootstrap-doc
+# For more detailes please visit https://utcnfans.github.io/QuarkChat/
