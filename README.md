@@ -26,7 +26,7 @@ Encryption can be actived using the menu **Encryption Settings**
 ## Installation
 
 This application is a portable one. (it does not requires installation).
-To download the application: 
+To download the application: https://github.com/UTCNFans/QuarkChat/raw/master/QuarkChat.jar
 
 ---
 
