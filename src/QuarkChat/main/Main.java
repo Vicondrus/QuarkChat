@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import QuarkChat.encryption.types.*;
 import QuarkChat.errorhandle.LogFile;
 import QuarkChat.gui.ChatGUI;
+import QuarkChat.update.CheckUpdate;
+import QuarkChat.update.UpdateGUI;
 
 public class Main {
 
@@ -19,6 +21,20 @@ public class Main {
 		/* -> use LogFile. (it is static)
 		/* ------------ */
 		
+		/* Check for updates */
+		UpdateGUI updateWindow = new UpdateGUI();
+		if(CheckUpdate.isUpdate() == true) // exists an update available
+		{
+			try {
+				updateWindow.frame.setVisible(true);
+			} 
+			catch (Exception error)
+			{
+				LogFile.logger.log(Level.SEVERE, "Update client could not start properly!", error);
+			}
+		}
+		/* ----------------- */
+		
 		/* Launch the application*/
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -26,6 +42,12 @@ public class Main {
 					//encryptModules.disableAll();
 					ChatGUI window = new ChatGUI(encryptModules);
 					window.frmChat.setVisible(true);
+					
+					if(updateWindow.frame.isVisible())
+					{
+						updateWindow.frame.toFront();
+
+					}
 				} catch (Exception error) {
 					LogFile.logger.log(Level.SEVERE, "Program could not start properly or it has a fatal error", error);
 				}
