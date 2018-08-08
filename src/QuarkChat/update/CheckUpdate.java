@@ -20,7 +20,6 @@ public class CheckUpdate {
 			value += arr[i] - '0'; // transform in number from ASCII
 		}
 		
-		System.out.println(value);
 		return value;
 	}
 	
