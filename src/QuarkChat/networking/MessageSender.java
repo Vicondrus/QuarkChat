@@ -51,6 +51,4 @@ public class MessageSender extends Thread{
 			LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageSender->run", error);
 		}
 	}
-	
-	
 }

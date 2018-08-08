@@ -2,6 +2,7 @@ package QuarkChat.networking;
 
 import QuarkChat.encryption.types.*;
 import QuarkChat.errorhandle.LogFile;
+import QuarkChat.gui.ChatGUI;
 import QuarkChat.networking.upnp.UPnP;
 import QuarkChat.encryption.AES;
 
@@ -19,11 +20,11 @@ public class MessageListener extends Thread {
 	private Socket clientSocket;
 	
 	int port = 8877;
-	WritableGUI gui;
+	ChatGUI gui;
 	final int MaximumSize = 4 * 1024;
 	EncrType crypto;
 
-	public MessageListener(WritableGUI gui, int port, EncrType encry_args) {
+	public MessageListener(ChatGUI gui, int port, EncrType encry_args) {
 		this.gui = gui;
 		this.port = port;
 		this.crypto = encry_args;
@@ -67,12 +68,26 @@ public class MessageListener extends Thread {
 		LogFile.logger.log(Level.INFO, "Connexion has been started!");
 		
 		/* --- Open uPnP --- */
-		MessageOpenuPnP.open(port);
+		if(gui.uPnPEnable == true)
+		{
+			gui.write("Waiting until port forwarding is configurated.... ", 2);
+			gui.btnConnect.setEnabled(false);
+			
+			if(MessageOpenuPnP.open(port))
+			{
+				gui.write("Port forwarding was succesfully configurated!", 2);
+			}
+			else
+			{
+				gui.write("[Error] Port forwarding could not be configurated!", 2);
+			}
+			
+			gui.btnConnect.setEnabled(true);
+		}
 		/* ----------------- */
 
 		try {
 			while((clientSocket = server.accept()) != null) { 
-				System.out.print("Da");
 				InputStream in = clientSocket.getInputStream();
 				
 				

@@ -15,18 +15,17 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JScrollPane;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Style;
 import javax.swing.text.StyleContext;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
+import javax.swing.JSeparator;
 
 public class ChatGUI implements WritableGUI {
 
@@ -56,13 +55,25 @@ public class ChatGUI implements WritableGUI {
 	protected JMenu ConnexionSettings;
 	protected Box horizontalBox;
 	protected JLabel receivePortLable;
-	protected JButton btnConnect;
+	public JButton btnConnect;
 	protected JTextField listenPort;
 	/* ---------------- */
 	
 	/* Connect button */
 	protected MessageListener msgListen;
 	/* -------------- */
+	
+	/* Connexion Settings */
+	public boolean uPnPEnable = true;
+	protected JCheckBox chckbxUpnp;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JCheckBox aesChkBox;
+	/* ------------------ */
+	
+	/* Message I/O */
+	protected MessageSender sender;
+	/* ---------------- */
 
 	/**
 	 *Create the application.
@@ -136,7 +147,7 @@ public class ChatGUI implements WritableGUI {
 		
 		sendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MessageSender sender = new MessageSender(crypto, msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
+			    sender = new MessageSender(crypto, msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
 				sendMessage.normalMessage(chatThis, sender);
 			}
 		});
@@ -148,26 +159,29 @@ public class ChatGUI implements WritableGUI {
 		mnNewMenu = new JMenu("Encryption");
 		menuBar.add(mnNewMenu);
 		
-		JCheckBoxMenuItem aesChkBox = new JCheckBoxMenuItem("AES");
-		aesChkBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				if(arg0.getStateChange() == ItemEvent.SELECTED) {
-					crypto.Symmetric.enable("AES", aesKeyField.getText());
-				}
-				else {
-					crypto.Symmetric.disable("AES");
-				}
-			}
-		});
-		mnNewMenu.add(aesChkBox);
-		
 		aesKeyField = new JTextField();
+		aesKeyField.setEnabled(false);
 		aesKeyField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				crypto.Symmetric.enable("AES", aesKeyField.getText());
 			}
 		});
+		
+		aesChkBox = new JCheckBox("AES");
+		aesChkBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(aesChkBox.isSelected())
+				{
+					aesKeyField.setEnabled(true);
+				}
+				else
+				{
+					aesKeyField.setEnabled(false);
+				}
+			}
+		});
+		mnNewMenu.add(aesChkBox);
 		
 		mnNewMenu.add(aesKeyField);
 		aesKeyField.setColumns(10);
@@ -186,6 +200,16 @@ public class ChatGUI implements WritableGUI {
 		listenPort.setText("8879");
 		ConnexionSettings.add(listenPort);
 		listenPort.setColumns(10);
+		
+		separator = new JSeparator();
+		ConnexionSettings.add(separator);
+		
+		separator_1 = new JSeparator();
+		ConnexionSettings.add(separator_1);
+		
+		checkboxuPnP.chkbox(chatThis);
+		
+		closeFrame.close(chatThis);
 	}
 
 	//@Override
