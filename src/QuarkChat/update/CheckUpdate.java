@@ -15,11 +15,12 @@ public class CheckUpdate {
 	{
 		int value = 0;
 		for(int i=17; i<=19; i++)
-		{
-			value += arr[i] - '0'; // transform in number from ASCII
+		{			
 			value *= 10;
+			value += arr[i] - '0'; // transform in number from ASCII
 		}
 		
+		System.out.println(value);
 		return value;
 	}
 	
