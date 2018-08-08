@@ -33,6 +33,10 @@ public class Main {
 				LogFile.logger.log(Level.SEVERE, "Update client could not start properly!", error);
 			}
 		}
+		else
+		{
+			LogFile.logger.log(Level.INFO, "No update available!");
+		}
 		/* ----------------- */
 		
 		/* Launch the application*/

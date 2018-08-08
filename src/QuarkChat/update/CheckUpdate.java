@@ -14,7 +14,7 @@ public class CheckUpdate {
 	private static int transformINT(byte arr[])
 	{
 		int value = 0;
-		for(int i=17; i<=18; i++)
+		for(int i=17; i<=19; i++)
 		{
 			value += arr[i] - '0'; // transform in number from ASCII
 			value *= 10;
