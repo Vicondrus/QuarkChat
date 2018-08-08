@@ -21,6 +21,7 @@ isHome: true
     <li>further development (this is only the beginning)</li>
     <li>configurable receive and send ports and ip</li>
     <li>automatic check for updates</li>
+    <li>automatic port forwarding using uPnP</li>
   </ul>
 </section>
 
@@ -62,7 +63,7 @@ isHome: true
   </div>
   
   <h2 id="Connexion">Connexion</h2>
-  <p>To guarantee you that we do not copy your data, we implemented for this program a peer-to-peer connexion protocol. We stronly recommand you that for this version to use a <b>port forwarding</b> if you are using a router.</p>
+  <p>This software is using pure peer-to-peer connexion. For NAT connexions, it will automatically program the port forwarding of NAT using uPnP tehnology. </p>
 </section>
 
 <section class="bs-docs-section">
@@ -87,7 +88,11 @@ isHome: true
         </tr>
 		<tr>
           <td>version</td>
-          <td>0.1 (Beta)</td>
+          <td>0.11 Stable</td>
+        </tr>
+    <tr>
+          <td>connexion protocol</td>
+          <td>TCP</td>
         </tr>
 		<tr>
           <td>license</td>
