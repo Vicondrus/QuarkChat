@@ -1,0 +1,22 @@
+Aug 08, 2018 11:14:25 AM QuarkChat.update.CheckUpdate isUpdate
+INFO: Connected to site for updates
+Aug 08, 2018 11:14:38 AM QuarkChat.networking.MessageListener run
+INFO: Connexion has been started!
+Aug 08, 2018 11:14:42 AM QuarkChat.networking.MessageOpenuPnP open
+WARNING: UPnP port forwarding not enabled: port is already mapped
+Aug 08, 2018 11:14:46 AM QuarkChat.networking.MessageSender run
+WARNING: chatproject.networking.MessageSender->run
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at QuarkChat.networking.MessageSender.run(MessageSender.java:32)
+

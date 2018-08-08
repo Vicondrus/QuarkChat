@@ -2,6 +2,7 @@ package QuarkChat.networking;
 
 import QuarkChat.encryption.types.*;
 import QuarkChat.errorhandle.LogFile;
+import QuarkChat.networking.upnp.UPnP;
 import QuarkChat.encryption.AES;
 
 import java.io.BufferedInputStream;
@@ -64,6 +65,10 @@ public class MessageListener extends Thread {
 	public void run() {
 		byte[] InputData = new byte[MaximumSize];
 		LogFile.logger.log(Level.INFO, "Connexion has been started!");
+		
+		/* --- Open uPnP --- */
+		MessageOpenuPnP.open(port);
+		/* ----------------- */
 
 		try {
 			while((clientSocket = server.accept()) != null) { 
@@ -123,6 +128,10 @@ public class MessageListener extends Thread {
 	public void closeConnexions()
 	{		
 		try {
+			if(UPnP.isMappedTCP(port))
+			{
+				UPnP.closePortTCP(port);
+			}
 			if(clientSocket != null)
 			{
 				this.clientSocket.close();
