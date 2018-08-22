@@ -25,11 +25,14 @@ import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
+import javax.swing.JMenuItem;
 
 public class ChatGUI implements WritableGUI {
 
 	public JFrame frmChat;
+	public JFrame frmTrans;
 	protected JTextField ipField;
 	protected JTextField sendPort;
 	protected JButton sendBtn;
@@ -40,6 +43,8 @@ public class ChatGUI implements WritableGUI {
 	protected JScrollPane scrollPane;
 	protected StyleContext context;
 	protected Style style;
+	protected JFileChooser browser; 
+	protected JButton browseBtn;
 	
 	
 	/* For Crypto Functions */
@@ -73,6 +78,7 @@ public class ChatGUI implements WritableGUI {
 	
 	/* Message I/O */
 	protected MessageSender sender;
+	private JMenu fileTrans;
 	/* ---------------- */
 
 	/**
@@ -88,33 +94,54 @@ public class ChatGUI implements WritableGUI {
 	 */
 	private void initialize() {
 		frmChat = new JFrame();
+		frmTrans = new JFrame();
 		frmChat.setForeground(Color.WHITE);
+		frmTrans.setAlwaysOnTop(true);
+		frmTrans.setVisible(false);
+		frmTrans.setForeground(Color.WHITE);
 		frmChat.setTitle("Chat");
+		frmTrans.setBounds(200,200,400,400);
 		frmChat.setBounds(100, 100, 610, 435);
 		frmChat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmChat.setResizable(false);
-		frmChat.getContentPane().setLayout(new MigLayout("", "[71px][16px][77px][15px][313px][13px][6px][16px][63px]", "[23px][320px][23px]"));
 		
 		btnConnect = new JButton("Connect");
+		btnConnect.setBounds(7, 7, 73, 23);
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				connectButton.btn(chatThis);
 			}
 		});
-		frmChat.getContentPane().add(btnConnect, "cell 0 0");
+		frmChat.getContentPane().setLayout(null);
+		frmChat.getContentPane().add(btnConnect);
+		
+		browseBtn = new JButton("Browse");
+		browseBtn.setBounds(115,115,190,135);
+		browseBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg1) {
+				browser.showOpenDialog(browseBtn);
+			}
+		});
+		
+		browser = new JFileChooser();
+		browser.setBounds(110,110,180,130);
+		frmTrans.getContentPane().add(browser);
 		
 		ipField = new JTextField();
+		ipField.setBounds(97, 9, 391, 20);
 		ipField.setText("localhost");
-		frmChat.getContentPane().add(ipField, "cell 2 0 3 1,growx,aligny center");
+		frmChat.getContentPane().add(ipField);
 		ipField.setColumns(10);
 		
 		sendPort = new JTextField();
+		sendPort.setBounds(502, 9, 76, 20);
 		sendPort.setText("4321");
-		frmChat.getContentPane().add(sendPort, "cell 6 0 3 1,growx,aligny center");
+		frmChat.getContentPane().add(sendPort);
 		sendPort.setColumns(10);
 		
 		scrollPane = new JScrollPane();
-		frmChat.getContentPane().add(scrollPane, "cell 0 1 9 1,grow");
+		scrollPane.setBounds(7, 34, 590, 318);
+		frmChat.getContentPane().add(scrollPane);
 		
 		document = new DefaultStyledDocument();
 		chatBox = new JTextPane(document);
@@ -127,6 +154,7 @@ public class ChatGUI implements WritableGUI {
 
 		
 		msgBox = new JTextField();	
+		msgBox.setBounds(7, 358, 495, 20);
 		msgBox.setEnabled(false);
 		
 		msgBox.addKeyListener(new KeyAdapter() {
@@ -139,10 +167,11 @@ public class ChatGUI implements WritableGUI {
 	            }
 			}
 		});
-		frmChat.getContentPane().add(msgBox, "cell 0 2 7 1,growx,aligny center");
+		frmChat.getContentPane().add(msgBox);
 		msgBox.setColumns(10);
 		
 		sendBtn = new JButton("Send");
+		sendBtn.setBounds(519, 356, 78, 23);
 		sendBtn.setEnabled(false);
 		
 		sendBtn.addActionListener(new ActionListener() {
@@ -151,7 +180,7 @@ public class ChatGUI implements WritableGUI {
 				sendMessage.normalMessage(chatThis, sender);
 			}
 		});
-		frmChat.getContentPane().add(sendBtn, "cell 8 2,growx,aligny top");
+		frmChat.getContentPane().add(sendBtn);
 		
 		menuBar = new JMenuBar();
 		frmChat.setJMenuBar(menuBar);
@@ -206,6 +235,17 @@ public class ChatGUI implements WritableGUI {
 		
 		separator_1 = new JSeparator();
 		ConnexionSettings.add(separator_1);
+		
+		fileTrans = new JMenu("FTP");
+		menuBar.add(fileTrans);
+		
+		JMenuItem mntmChooseFile = new JMenuItem("Choose File");
+		mntmChooseFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmTrans.setVisible(true);
+			}
+		});
+		fileTrans.add(mntmChooseFile);
 		
 		checkboxuPnP.chkbox(chatThis);
 		

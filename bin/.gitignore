@@ -1,6 +1,12 @@
+
+ErrorLogs.log
+/.classpath
+/.gitignore
+/.project
+/.settings/
+/QuarkChat.jar
 /QuarkChat/
-/ErrorLogs.log.1
-/ErrorLogs.log.1.lck
-/ErrorLogs.log.2
-/ErrorLogs.log.lck
-/ErrorLogs.log
+/README.md
+/jgoodies-forms-1.8.0.jar
+/miglayout15-swing.jar
+/version
