@@ -16,7 +16,8 @@ public class FTPbrowser {
 				File fisier;			    
 				if((fisier = gui.browser.getSelectedFile()) != null)
 				{
-					FTPsender.send(gui, fisier, gui.sendPort.getText().gui.ipField.getText());
+					FTPsender.send(gui, fisier,Integer.parseInt(gui.ftpSend.getText()),gui.ipField.getText());
+					gui.ftpSend.setEnabled(false);
 				}
 				
 				gui.frmTrans.setVisible(false);

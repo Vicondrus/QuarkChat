@@ -84,6 +84,7 @@ public class ChatGUI implements WritableGUI {
 	protected MessageSender sender;
 	protected JMenuItem mntmChooseFile;
 	JMenu fileTrans;
+	JTextField ftpSend;
 	/* ---------------- */
 
 	/**
@@ -253,12 +254,24 @@ public class ChatGUI implements WritableGUI {
 		});
 		fileTrans.add(mntmChooseFile);
 		
+		JSeparator separator_2 = new JSeparator();
+		fileTrans.add(separator_2);
+		
+		JLabel lblFtpPort = new JLabel("FTP Port");
+		fileTrans.add(lblFtpPort);
+		
+		ftpSend = new JTextField();
+		ftpSend.setText("8880");
+		fileTrans.add(ftpSend);
+		ftpSend.setColumns(10);
+		
 		FTPbrowser.show(chatThis);
 				
 		checkboxuPnP.chkbox(chatThis);
 		
 		closeFrame.close(chatThis);
 	}
+
 
 	//@Override
 	public void write(String s, int i) {

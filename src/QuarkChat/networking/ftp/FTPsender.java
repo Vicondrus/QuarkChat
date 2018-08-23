@@ -19,15 +19,10 @@ public class FTPsender extends Thread{
 	private File fileAddress;
 	private ChatGUI gui;
 
-	public void send(ChatGUI gui, File fileAddress, int port, String hostname)
+	public static void send(ChatGUI gui, File fileAddress, int port, String hostname)
 	{
 		sendWrite.write(gui, 2, "[FTP] The file is sending...");
 		LogFile.logger.log(Level.INFO, "[FTP] Sending procedure is enabled, file " + fileAddress.getName() + " from " + fileAddress.getPath());
-		
-		this.port = port;
-		this.hostname = hostname;
-		this.fileAddress = fileAddress;
-		this.gui = gui;
 	}
 	
 	@Override
