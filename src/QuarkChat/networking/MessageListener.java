@@ -4,8 +4,6 @@ import QuarkChat.encryption.types.*;
 import QuarkChat.errorhandle.LogFile;
 import QuarkChat.gui.ChatGUI;
 import QuarkChat.networking.upnp.UPnP;
-import QuarkChat.encryption.AES;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,32 +33,7 @@ public class MessageListener extends Thread {
 		}
 	}
 	
-	private int readBuffer(BufferedInputStream BuffMsg, byte[] ByteData) throws IOException
-	{
-		int lengthMsg = 0;
-		byte TempBuff;
-		
-		TempBuff = (byte) BuffMsg.read();
-		while(TempBuff != -1)
-		{
-			ByteData[lengthMsg++] = TempBuff;
-			TempBuff = (byte) BuffMsg.read();
-		}
-		
-		return lengthMsg;
-	}
-	
-	private byte[] copyData(byte[] d_1, int length) // copy d_1 with fix lenght
-	{
-		byte[] d_2 = new byte[length];
-		
-		for(int i=0; i<length; i++)
-		{
-			d_2[i] = d_1[i];
-		}
-		
-		return d_2;
-	}
+
 	
 	@Override
 	public void run() {
@@ -92,7 +65,7 @@ public class MessageListener extends Thread {
 				
 				
 				BufferedInputStream BufferMsg = new BufferedInputStream(in);	
-				int BuffSize = readBuffer(BufferMsg, InputData); /* Read data */
+				int BuffSize = MessageChatBox.readBuffer(BufferMsg, InputData); /* Read data */
 				
 				if(BuffSize == -1) // nothing found
 				{
@@ -100,39 +73,10 @@ public class MessageListener extends Thread {
 					return; // force exit
 				}
 				
-				String line;
-				byte[] TempData = copyData(InputData, BuffSize);
-				
-				if(crypto.Symmetric.isEnable("AES") == true)
+				if(InputData[0] == 1) // it is a message
 				{
-					line = AES.decrypt(TempData, crypto.Symmetric.key[0]);
-				}
-				else
-				{
-					line = new String(TempData);
-				}
-				
-				if (line != null)
-				{
-					gui.write(line,1);
-				}
-				else
-				{
-					if(AES.isError())
-					{
-						if(AES.isWrong()) {
-							gui.write("[AES encryption] Wrong password!",0);
-						}
-						else {
-							gui.write("[AES encryption] Wrong encryption specifications!", 0);
-							LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageListener->run", 
-									"Wrong decryption key! The used key ends with: " + 
-							crypto.Symmetric.key[0].substring(crypto.Symmetric.key[0].length()-1));
-
-						}
-					}
-					gui.write("[Error] Error chatproject.networking.94 -> null line.", 0);
-					LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageListener->run", "null pointer or null line or bad transmission");
+					InputData[0] = 0; // transform in null
+					MessageChatBox.showChat(gui, InputData, BuffSize, crypto); // show message on chat
 				}
 			}
 		} catch (IOException error) {

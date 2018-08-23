@@ -8,12 +8,16 @@ import QuarkChat.encryption.types.EncrType;
 import QuarkChat.networking.MessageListener;
 import QuarkChat.networking.MessageSender;
 import QuarkChat.networking.WritableGUI;
+import QuarkChat.networking.ftp.FTPsender;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
@@ -78,7 +82,8 @@ public class ChatGUI implements WritableGUI {
 	
 	/* Message I/O */
 	protected MessageSender sender;
-	private JMenu fileTrans;
+	protected JMenuItem mntmChooseFile;
+	JMenu fileTrans;
 	/* ---------------- */
 
 	/**
@@ -101,12 +106,12 @@ public class ChatGUI implements WritableGUI {
 		frmTrans.setForeground(Color.WHITE);
 		frmChat.setTitle("Chat");
 		frmTrans.setBounds(200,200,400,400);
-		frmChat.setBounds(100, 100, 610, 435);
+		frmChat.setBounds(100, 100, 610, 453);
 		frmChat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmChat.setResizable(false);
 		
 		btnConnect = new JButton("Connect");
-		btnConnect.setBounds(7, 7, 73, 23);
+		btnConnect.setBounds(7, 7, 102, 23);
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				connectButton.btn(chatThis);
@@ -128,7 +133,7 @@ public class ChatGUI implements WritableGUI {
 		frmTrans.getContentPane().add(browser);
 		
 		ipField = new JTextField();
-		ipField.setBounds(97, 9, 391, 20);
+		ipField.setBounds(121, 9, 367, 20);
 		ipField.setText("localhost");
 		frmChat.getContentPane().add(ipField);
 		ipField.setColumns(10);
@@ -239,7 +244,8 @@ public class ChatGUI implements WritableGUI {
 		fileTrans = new JMenu("FTP");
 		menuBar.add(fileTrans);
 		
-		JMenuItem mntmChooseFile = new JMenuItem("Choose File");
+		mntmChooseFile = new JMenuItem("Choose File");
+		mntmChooseFile.setEnabled(false);
 		mntmChooseFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmTrans.setVisible(true);
@@ -247,6 +253,8 @@ public class ChatGUI implements WritableGUI {
 		});
 		fileTrans.add(mntmChooseFile);
 		
+		FTPbrowser.show(chatThis);
+				
 		checkboxuPnP.chkbox(chatThis);
 		
 		closeFrame.close(chatThis);
