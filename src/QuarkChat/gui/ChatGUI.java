@@ -8,16 +8,12 @@ import QuarkChat.encryption.types.EncrType;
 import QuarkChat.networking.MessageListener;
 import QuarkChat.networking.MessageSender;
 import QuarkChat.networking.WritableGUI;
-import QuarkChat.networking.ftp.FTPsender;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import net.miginfocom.swing.MigLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
@@ -76,15 +72,12 @@ public class ChatGUI implements WritableGUI {
 	public boolean uPnPEnable = true;
 	protected JCheckBox chckbxUpnp;
 	private JSeparator separator;
-	private JSeparator separator_1;
 	private JCheckBox aesChkBox;
 	/* ------------------ */
 	
 	/* Message I/O */
 	protected MessageSender sender;
 	protected JMenuItem mntmChooseFile;
-	JMenu fileTrans;
-	JTextField ftpSend;
 	/* ---------------- */
 
 	/**
@@ -238,35 +231,7 @@ public class ChatGUI implements WritableGUI {
 		
 		separator = new JSeparator();
 		ConnexionSettings.add(separator);
-		
-		separator_1 = new JSeparator();
-		ConnexionSettings.add(separator_1);
-		
-		fileTrans = new JMenu("FTP");
-		menuBar.add(fileTrans);
-		
-		mntmChooseFile = new JMenuItem("Choose File");
-		mntmChooseFile.setEnabled(false);
-		mntmChooseFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frmTrans.setVisible(true);
-			}
-		});
-		fileTrans.add(mntmChooseFile);
-		
-		JSeparator separator_2 = new JSeparator();
-		fileTrans.add(separator_2);
-		
-		JLabel lblFtpPort = new JLabel("FTP Port");
-		fileTrans.add(lblFtpPort);
-		
-		ftpSend = new JTextField();
-		ftpSend.setText("8880");
-		fileTrans.add(ftpSend);
-		ftpSend.setColumns(10);
-		
-		FTPbrowser.show(chatThis);
-				
+						
 		checkboxuPnP.chkbox(chatThis);
 		
 		closeFrame.close(chatThis);
