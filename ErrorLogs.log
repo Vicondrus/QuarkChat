@@ -1,0 +1,27 @@
+Dec 18, 2018 9:13:38 PM QuarkChat.update.CheckUpdate isUpdate
+INFO: Connected to site for updates
+Dec 18, 2018 9:13:39 PM QuarkChat.update.CheckUpdate isUpdate
+WARNING: IOException
+java.io.FileNotFoundException: https://raw.githubusercontent.com/UTCNFans/QuarkChat/master/version
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	at QuarkChat.update.CheckUpdate.isUpdate(CheckUpdate.java:40)
+	at QuarkChat.main.Main.main(Main.java:26)
+
+Dec 18, 2018 9:13:59 PM QuarkChat.networking.MessageListener run
+INFO: Connexion has been started!
+Dec 18, 2018 9:14:02 PM QuarkChat.networking.MessageOpenuPnP open
+INFO: UPnP port forwarding enabled
+Dec 18, 2018 9:14:21 PM QuarkChat.encryption.AES decrypt
+WARNING: Error at chatproject.encryption.AES
+javax.crypto.BadPaddingException: Given final block not properly padded. Such issues can arise if a bad key is used during decryption.
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:991)
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:847)
+	at com.sun.crypto.provider.AESCipher.engineDoFinal(AESCipher.java:446)
+	at javax.crypto.Cipher.doFinal(Cipher.java:2164)
+	at QuarkChat.encryption.AES.decrypt(AES.java:102)
+	at QuarkChat.networking.MessageListener.run(MessageListener.java:93)
+
+Dec 18, 2018 9:14:21 PM QuarkChat.networking.MessageListener run
+WARNING: chatproject.networking.MessageListener->run
