@@ -4,6 +4,7 @@ import QuarkChat.errorhandle.LogFile;
 import QuarkChat.gui.ChatGUI;
 import QuarkChat.messageformats.FileFormatR;
 import QuarkChat.messageformats.MessageFormatR;
+import QuarkChat.historyFile.fileHandler;
 import QuarkChat.networking.upnp.UPnP;
 import QuarkChat.encryption.AES;
 
@@ -22,9 +23,12 @@ public class MessageListener extends Thread {
 
 	int port = 8877;
 	WritableGUI gui;
-	final int MaximumSize = 4 * 1024;
 
-	public MessageListener(ChatGUI gui, int port) {
+	final int MaximumSize = 4 * 1024;
+	EncrType crypto;
+	fileHandler hand;
+
+	public MessageListener(WritableGUI gui, int port, EncrType encry_args) {
 		this.gui = gui;
 		this.port = port;
 		try {
@@ -64,6 +68,7 @@ public class MessageListener extends Thread {
 	@Override
 	public void run() {
 		LogFile.logger.log(Level.INFO, "Connexion has been started!");
+		hand=new fileHandler();
 
 		/* --- Open uPnP --- */
 		MessageOpenuPnP.open(port);
@@ -102,7 +107,7 @@ public class MessageListener extends Thread {
 		}
 	}
 
-	public void closeConnexions()
+	public void closeConnexions(boolean del)
 	{
 		try {
 			if(UPnP.isMappedTCP(port))
@@ -117,9 +122,25 @@ public class MessageListener extends Thread {
 			{
 				this.server.close();
 			}
+			if(del==true) {
+				hand.deleteFile();
+			}
+			else {
+				hand.closeFile();
+			}
 			LogFile.logger.log(Level.INFO, "Connexion has been stopped");
 		} catch (IOException error) {
 			LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageListener.closeConnexions", error);
 		}
 	}
+
+	public fileHandler getHand() {
+		return hand;
+	}
+
+	public void setHand(fileHandler hand) {
+		this.hand = hand;
+	}
+
+
 }
