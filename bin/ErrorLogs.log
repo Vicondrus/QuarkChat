@@ -1,0 +1,11 @@
+Dec 19, 2018 7:40:25 PM QuarkChat.update.CheckUpdate isUpdate
+INFO: Connected to site for updates
+Dec 19, 2018 7:40:29 PM QuarkChat.update.CheckUpdate isUpdate
+WARNING: IOException
+java.io.FileNotFoundException: https://raw.githubusercontent.com/UTCNFans/QuarkChat/master/version
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+	at QuarkChat.update.CheckUpdate.isUpdate(CheckUpdate.java:40)
+	at QuarkChat.main.Main.main(Main.java:26)
+
