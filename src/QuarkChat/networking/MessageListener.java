@@ -5,6 +5,8 @@ import QuarkChat.gui.ChatGUI;
 import QuarkChat.messageformats.FileFormatR;
 import QuarkChat.messageformats.MessageFormatR;
 import QuarkChat.networking.upnp.UPnP;
+import QuarkChat.encryption.AES;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +19,9 @@ public class MessageListener extends Thread {
 
 	private ServerSocket server;
 	private Socket clientSocket;
-	
+
 	int port = 8877;
-	ChatGUI gui;
+	WritableGUI gui;
 	final int MaximumSize = 4 * 1024;
 
 	public MessageListener(ChatGUI gui, int port) {
@@ -31,35 +33,48 @@ public class MessageListener extends Thread {
 			LogFile.logger.log(Level.WARNING, "IOException", error);
 		}
 	}
-	
+
+	private int readBuffer(BufferedInputStream BuffMsg, byte[] ByteData) throws IOException
+	{
+		int lengthMsg = 0;
+		byte TempBuff;
+
+		TempBuff = (byte) BuffMsg.read();
+		while(TempBuff != -1)
+		{
+			ByteData[lengthMsg++] = TempBuff;
+			TempBuff = (byte) BuffMsg.read();
+		}
+
+		return lengthMsg;
+	}
+
+	private byte[] copyData(byte[] d_1, int length) // copy d_1 with fix lenght
+	{
+		byte[] d_2 = new byte[length];
+
+		for(int i=0; i<length; i++)
+		{
+			d_2[i] = d_1[i];
+		}
+
+		return d_2;
+	}
+
 	@Override
 	public void run() {
 		LogFile.logger.log(Level.INFO, "Connexion has been started!");
-		
+
 		/* --- Open uPnP --- */
-		if(gui.uPnPEnable == true)
-		{
-			gui.write("Waiting until port forwarding is configurated.... ", 2);
-			gui.btnConnect.setEnabled(false);
-			
-			if(MessageOpenuPnP.open(port))
-			{
-				gui.write("Port forwarding was succesfully configurated!", 2);
-			}
-			else
-			{
-				gui.write("[Error] Port forwarding could not be configurated!", 2);
-			}
-			
-			gui.btnConnect.setEnabled(true);
-		}
+		MessageOpenuPnP.open(port);
 		/* ----------------- */
 
 		try {
-			while((clientSocket = server.accept()) != null) { 
+			while((clientSocket = server.accept()) != null) {
+				System.out.print("Da");
 				InputStream in = clientSocket.getInputStream();
 				BufferedInputStream BufferMsg = new BufferedInputStream(in);
-				
+
 				byte[] bufferTemp = new byte[2048];
 				BufferMsg.read(bufferTemp);
 
@@ -80,15 +95,15 @@ public class MessageListener extends Thread {
 					FileFormatR file = new FileFormatR(bufferTemp);
 				}
 
-				
+
 			}
 		} catch (IOException error) {
 			LogFile.logger.log(Level.FINEST, "IOException", error);
 		}
 	}
-	
+
 	public void closeConnexions()
-	{		
+	{
 		try {
 			if(UPnP.isMappedTCP(port))
 			{

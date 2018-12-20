@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 
 public class MessageSender extends Thread{
-	
+
 	private String hostname;
 	private int port;
 	private ChatGUI error_handle;
@@ -38,7 +38,7 @@ public class MessageSender extends Thread{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				client.getOutputStream().write(file.getData());
 				client.close();
 			}
@@ -51,4 +51,6 @@ public class MessageSender extends Thread{
 			LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageSender->run", error);
 		}
 	}
+
+
 }
