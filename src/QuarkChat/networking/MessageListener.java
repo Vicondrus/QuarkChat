@@ -2,6 +2,7 @@ package QuarkChat.networking;
 
 import QuarkChat.errorhandle.LogFile;
 import QuarkChat.gui.ChatGUI;
+import QuarkChat.historyFile.FileHandler;
 import QuarkChat.messageformats.FileFormatR;
 import QuarkChat.messageformats.MessageFormatR;
 import QuarkChat.networking.upnp.UPnP;
@@ -21,6 +22,7 @@ public class MessageListener extends Thread {
 	int port = 8877;
 	ChatGUI gui;
 	final int MaximumSize = 4 * 1024;
+	FileHandler hand;
 
 	public MessageListener(ChatGUI gui, int port) {
 		this.gui = gui;
@@ -87,7 +89,7 @@ public class MessageListener extends Thread {
 		}
 	}
 	
-	public void closeConnexions()
+	public void closeConnexions(boolean del)
 	{		
 		try {
 			if(UPnP.isMappedTCP(port))
@@ -102,9 +104,23 @@ public class MessageListener extends Thread {
 			{
 				this.server.close();
 			}
+			if(del==true) {
+				hand.deleteFile();
+			}
+			else {
+				hand.closeFile();
+			}
 			LogFile.logger.log(Level.INFO, "Connexion has been stopped");
 		} catch (IOException error) {
 			LogFile.logger.log(Level.WARNING, "chatproject.networking.MessageListener.closeConnexions", error);
 		}
 	}
+	public FileHandler getHand() {
+		return hand;
+	}
+
+	public void setHand(FileHandler hand) {
+		this.hand = hand;
+	}
+	
 }

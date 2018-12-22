@@ -1,2 +1,5 @@
-/MessageFormat/
+
+ErrorLogs.log
+/.gitignore
+/ErrorLogs.log.lck
 /QuarkChat/

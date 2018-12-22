@@ -25,6 +25,7 @@ import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.JMenuItem;
@@ -78,6 +79,15 @@ public class ChatGUI implements WritableGUI {
 	protected MessageSender sender;
 	protected JMenuItem mntmChooseFile;
 	/* ---------------- */
+	
+	private JMenu mnHistory;
+	private JCheckBox chckbxSave;
+	private JMenu mnFiles;
+	private JComboBox chosenFile;
+	private JButton transferBtn;
+	private JTextField chosenDirectory;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 *Create the application.
@@ -160,7 +170,7 @@ public class ChatGUI implements WritableGUI {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
 	            {
 					MessageSender sender = new MessageSender(msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
-					sendMessage.normalMessage(chatThis, sender);
+					sendMessage.normalMessage(chatThis, sender,msgListen.getHand());
 	            }
 			}
 		});
@@ -174,7 +184,7 @@ public class ChatGUI implements WritableGUI {
 		sendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			    sender = new MessageSender(msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
-				sendMessage.normalMessage(chatThis, sender);
+				sendMessage.normalMessage(chatThis, sender,msgListen.getHand());
 			}
 		});
 		frmChat.getContentPane().add(sendBtn);
@@ -234,11 +244,40 @@ public class ChatGUI implements WritableGUI {
 						
 		checkboxuPnP.chkbox(chatThis);
 		closeFrame.close(chatThis);
+		
+		mnHistory = new JMenu("History");
+		menuBar.add(mnHistory);
+		
+		chckbxSave = new JCheckBox("Save");
+		mnHistory.add(chckbxSave);
+		
+		mnFiles = new JMenu("Files");
+		menuBar.add(mnFiles);
+		
+		lblNewLabel = new JLabel("Path");
+		mnFiles.add(lblNewLabel);
+		
+		chosenDirectory = new JTextField();
+		mnFiles.add(chosenDirectory);
+		chosenDirectory.setColumns(10);
+		
+		lblNewLabel_1 = new JLabel("File");
+		mnFiles.add(lblNewLabel_1);
+		
+		chosenFile = new JComboBox();
+		mnFiles.add(chosenFile);
+		
+		transferBtn = new JButton("Transfer");
+		mnFiles.add(transferBtn);
 	}
 
 
 	//@Override
 	public void write(String s, int i) {
-		sendWrite.write(chatThis, i, s);
+		sendWrite.write(chatThis, i, s,msgListen.getHand());
+	}
+	
+	public boolean returnSave() {
+		return chckbxSave.isSelected();
 	}
 }

@@ -15,7 +15,7 @@ public class closeFrame {
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		    	if(gui.msgListen != null)
 		    	{
-				    gui.msgListen.closeConnexions();
+				    gui.msgListen.closeConnexions(!gui.returnSave());
 		    	}
 		    	
 			    LogFile.logger.log(Level.INFO, "Application is closing", windowEvent);
