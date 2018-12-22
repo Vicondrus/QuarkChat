@@ -10,7 +10,7 @@ public class connectButton {
 			gui.btnConnect.setText("Disconnect");
 			
 			/* -- Open listening the ports -- */
-			gui.msgListen = new MessageListener(gui, Integer.parseInt(gui.listenPort.getText()), gui.crypto);
+			gui.msgListen = new MessageListener(gui, Integer.parseInt(gui.listenPort.getText()));
 			gui.msgListen.start();
 			/* ------------------------------ */
 			
@@ -23,7 +23,6 @@ public class connectButton {
 			gui.msgBox.setEnabled(true);
 			
 			gui.frmTrans.setEnabled(true);
-			gui.mntmChooseFile.setEnabled(true);
 			/* ----------------------------------------------------------------- */
 		}
 		else
@@ -43,7 +42,6 @@ public class connectButton {
 			gui.sendBtn.setEnabled(false);
 			gui.msgBox.setEnabled(false);
 			
-			gui.mntmChooseFile.setEnabled(false);
 			/* --------------- */
 		}
 	}

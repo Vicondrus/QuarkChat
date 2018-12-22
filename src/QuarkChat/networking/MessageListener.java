@@ -1,8 +1,9 @@
 package QuarkChat.networking;
 
-import QuarkChat.encryption.types.*;
 import QuarkChat.errorhandle.LogFile;
 import QuarkChat.gui.ChatGUI;
+import QuarkChat.messageformats.FileFormatR;
+import QuarkChat.messageformats.MessageFormatR;
 import QuarkChat.networking.upnp.UPnP;
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -20,12 +21,10 @@ public class MessageListener extends Thread {
 	int port = 8877;
 	ChatGUI gui;
 	final int MaximumSize = 4 * 1024;
-	EncrType crypto;
 
-	public MessageListener(ChatGUI gui, int port, EncrType encry_args) {
+	public MessageListener(ChatGUI gui, int port) {
 		this.gui = gui;
 		this.port = port;
-		this.crypto = encry_args;
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException error) {
@@ -33,11 +32,8 @@ public class MessageListener extends Thread {
 		}
 	}
 	
-
-	
 	@Override
 	public void run() {
-		byte[] InputData = new byte[MaximumSize];
 		LogFile.logger.log(Level.INFO, "Connexion has been started!");
 		
 		/* --- Open uPnP --- */
@@ -62,22 +58,29 @@ public class MessageListener extends Thread {
 		try {
 			while((clientSocket = server.accept()) != null) { 
 				InputStream in = clientSocket.getInputStream();
+				BufferedInputStream BufferMsg = new BufferedInputStream(in);
 				
-				
-				BufferedInputStream BufferMsg = new BufferedInputStream(in);	
-				int BuffSize = MessageChatBox.readBuffer(BufferMsg, InputData); /* Read data */
-				
-				if(BuffSize == -1) // nothing found
+				byte[] bufferTemp = new byte[2048];
+				BufferMsg.read(bufferTemp);
+
+				if(bufferTemp[0] == 0x34)
 				{
-					System.err.println("[Error] Empty message! Maybe your connexion is compromised!");
-					return; // force exit
+					// it is a MESSAGE
+					MessageFormatR mesaje = new MessageFormatR(bufferTemp);
+					if(mesaje.indigest() != null) {
+						String mesaj = new String(mesaje.indigest());
+						gui.write(mesaj, 1);
+					}else {
+						gui.write("Ai primit un mesaj encriptat pe care nu l-ai putut decripta! "
+								+ "(cheie sau setari gresite)", 2);
+					}
 				}
+				else if(bufferTemp[0] == 0x35){
+					// it is a FILE
+					FileFormatR file = new FileFormatR(bufferTemp);
+				}
+
 				
-				if(InputData[0] == 1) // it is a message
-				{
-					InputData[0] = 0; // transform in null
-					MessageChatBox.showChat(gui, InputData, BuffSize, crypto); // show message on chat
-				}
 			}
 		} catch (IOException error) {
 			LogFile.logger.log(Level.FINEST, "IOException", error);

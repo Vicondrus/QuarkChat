@@ -4,7 +4,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import QuarkChat.encryption.types.EncrType;
+import QuarkChat.encryption.types.EncrSym;
 import QuarkChat.networking.MessageListener;
 import QuarkChat.networking.MessageSender;
 import QuarkChat.networking.WritableGUI;
@@ -48,7 +48,6 @@ public class ChatGUI implements WritableGUI {
 	
 	
 	/* For Crypto Functions */
-	protected EncrType crypto;
 	protected JMenuBar menuBar;
 	protected JMenu mnNewMenu;
 	protected JTextField aesKeyField;
@@ -83,8 +82,7 @@ public class ChatGUI implements WritableGUI {
 	/**
 	 *Create the application.
 	 **/
-	public ChatGUI(EncrType encry_arg) {
-		this.crypto = encry_arg;
+	public ChatGUI() {
 		initialize();
 	}
 
@@ -161,7 +159,7 @@ public class ChatGUI implements WritableGUI {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
 	            {
-					MessageSender sender = new MessageSender(crypto, msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
+					MessageSender sender = new MessageSender(msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
 					sendMessage.normalMessage(chatThis, sender);
 	            }
 			}
@@ -175,7 +173,7 @@ public class ChatGUI implements WritableGUI {
 		
 		sendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    sender = new MessageSender(crypto, msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
+			    sender = new MessageSender(msgBox.getText(), ipField.getText(), Integer.parseInt(sendPort.getText()), chatThis);
 				sendMessage.normalMessage(chatThis, sender);
 			}
 		});
@@ -192,7 +190,7 @@ public class ChatGUI implements WritableGUI {
 		aesKeyField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				crypto.Symmetric.enable("AES", aesKeyField.getText());
+				EncrSym.enable("AES", aesKeyField.getText());
 			}
 		});
 		
@@ -202,10 +200,12 @@ public class ChatGUI implements WritableGUI {
 				if(aesChkBox.isSelected())
 				{
 					aesKeyField.setEnabled(true);
+					EncrSym.enable("AES", aesKeyField.getText());
 				}
 				else
 				{
 					aesKeyField.setEnabled(false);
+					EncrSym.disable("AES");
 				}
 			}
 		});
@@ -233,7 +233,6 @@ public class ChatGUI implements WritableGUI {
 		ConnexionSettings.add(separator);
 						
 		checkboxuPnP.chkbox(chatThis);
-		
 		closeFrame.close(chatThis);
 	}
 

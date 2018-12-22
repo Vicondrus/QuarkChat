@@ -25,6 +25,7 @@ public class sendMessage{
 		}
         
 		//chatBox.append("Me: " + msgBox.getText() + System.lineSeparator());
+        System.out.println(sender.hashCode());
 		sender.start();
 		gui.msgBox.setText(null);
 	}
